@@ -1,0 +1,86 @@
+function getParentGroup(context) {
+    doc = context.document;
+    selection = context.selection;
+
+    if (selection.count() > 0) {
+        var parent = selection[0].parentGroup();
+        if (parent.className() != "MSPage") {
+            doc.currentPage().deselectAllLayers();
+            // parent.setIsSelected(true)
+            return parent;
+        }
+    } else {
+        doc.showMessage("Please select a layer.");
+    }
+}
+
+
+function getLayersInGroup(group) {
+    var layers = [];
+    for (var i = 0; i < group.layers().count(); i++) {
+        // group.layers().objectAtIndex(i).setIsSelected(true);
+        var layer = group.layers().objectAtIndex(i);
+        if ( layer.name() != '*margin') {
+            layers.push(layer);
+        }
+    }
+    return layers;
+}
+
+function getMargin(group) {
+    for (var i = 0; i < group.layers().count(); i++) {
+        // group.layers().objectAtIndex(i).setIsSelected(true);
+        var layer = group.layers().objectAtIndex(i);
+        if ( layer.name() == '*margin' ) {
+            return layer;
+        }
+    }
+}
+
+// Sort function, descending
+function sortBottom(a, b) {
+	return b.bottom - a.bottom;
+}
+
+var onRun = function (context) {
+    var parentGroup = getParentGroup(context);
+
+    var layers = getLayersInGroup(parentGroup);
+    var margin = getMargin(parentGroup);
+    
+
+    // old school variable
+    var doc = context.document;
+    var selection = context.selection;
+    var meta = [];
+
+    for (var i = 0; i < layers.length; i++) {
+
+        // Store some meta data about all layers and their respective bottom position
+
+        // Loop through all children of the artboard
+        for (var j = 0; j < layers.length; j++) {
+
+            // Remember the current layer
+            var layer = layers[j];
+
+            if (layer !== undefined && layer.className() != "MSArtboardGroup") {
+
+                // Calculate the bottom edge position
+                var bottom = layer.frame().y() + layer.frame().height();
+                meta.push({
+                    layer: layer,
+                    bottom: bottom
+                });
+            }
+        }
+
+        // Sort the layers by bottom position, descending
+        meta.sort(sortBottom);
+
+        // Finally set the height of the artboard
+    }
+
+    margin.frame().setTop(meta[0].bottom)
+    margin.setIsSelected(true);
+}

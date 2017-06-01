@@ -1,0 +1,80 @@
+{
+  "name": "Sketch Hacks",
+  "description": "Playing around with Sketch Plugins",
+  "author": "Tim Dosé",
+  "version": 0.1,
+  "identifier": "com.timdose.sketch.mate",
+  "commands": [
+
+    {
+      "name": "Resize Text",
+      "identifier": "com.timdose.sketch.resize.text",
+      "shortcut": "option command control t",
+      "script": "Resize Text.js"
+    },
+    {
+      "name": "Resize Artboard",
+      "identifier": "com.timdose.sketch.resize.artboard",
+      "shortcut": "option command control a",
+      "script": "Resize Artboard.js"
+    },
+    {
+      "name": "Move Right",
+      "identifier": "com.timdose.sketch.move.right",
+      "shortcut": "option control →",
+      "script": "Move Right.js"
+    },
+    {
+      "name": "Create Link Underline",
+      "identifier": "com.timdose.sketch.link.underline",
+      "shortcut": "option control command u",
+      "script": "Create Link Underline.js"
+    },
+    {
+      "name": "Heads up",
+      "identifier": "com.timdose.sketch.util.headsup",
+      "shortcut": "option control command h",
+      "script": "Heads Up.js"
+    },
+    {
+      "name": "Stack Vertically",
+      "identifier": "com.timdose.sketch.util.stackvertically",
+      "shortcut": "option control command v",
+      "script": "Stack Vertically.js"
+    },
+    {
+      "name": "Smart Fit Artboard Height",
+      "identifier": "com.timdose.sketch.util.smartfitartboardheight",
+      "shortcut": "option control command h",
+      "script": "Smart Fit Artboard Height.js"
+    },
+    {
+      "name": "Move Margin To Bottom",
+      "identifier": "com.timdose.sketch.util.movemargintobottom",
+      "shortcut": "option control command m",
+      "script": "Move Margin To Bottom.js"
+    },
+    {
+      "name": "Select Current & Below",
+      "identifier": "com.timdose.sketch.select.selectcurrentandbelow",
+      "shortcut": "option control command b",
+      "script": "Select Current And Below.js"
+    }
+    
+    
+
+  ],
+  "menu": {
+    "items": [
+      "com.timdose.sketch.resize.text",
+      "com.timdose.sketch.resize.artboard",
+      "com.timdose.sketch.move.right",
+      "com.timdose.sketch.link.underline",
+      "com.timdose.sketch.util.stackvertically",
+      "com.timdose.sketch.util.smartfitartboardheight",
+      "com.timdose.sketch.util.movemargintobottom",
+      "com.timdose.sketch.select.selectcurrentandbelow"
+
+    ]
+  }
+}
