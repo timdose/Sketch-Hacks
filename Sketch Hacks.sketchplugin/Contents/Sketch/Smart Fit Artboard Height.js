@@ -83,7 +83,13 @@ var onRun = function (context) {
 
             // Finally set the height of the artboard
             artboard.frame().setHeight(meta[0].bottom)
+
+
         }
+    }
+
+    for ( var k = 0; k < selection.count(); k++ ) {
+      selection.objectAtIndex(k).setIsSelected(true);
     }
 }
 
