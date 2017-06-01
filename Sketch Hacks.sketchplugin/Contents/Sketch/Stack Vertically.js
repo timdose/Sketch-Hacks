@@ -8,7 +8,7 @@
  */
 
 
-@import '../../../Sketch Mate.sketchplugin/Contents/Sketch/sketchSelect.js'
+@import '../../../../Sketch Mate.sketchplugin/Contents/Sketch/sketchSelect.js'
 
 
 var onRun = function (context) {
