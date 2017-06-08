@@ -1,0 +1,28 @@
+
+body {
+    margin: 0;
+    /*padding: 10px;*/
+    font: 12px/14px "SF UI Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: #000;
+    background: #fff;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.container {
+	width: 200px;
+}
+
+.square {
+	width: 50px;
+	height: 50px;
+	border-radius: 5px;
+	background: red;
+	float: left;
+	margin-right: 5px;
+}

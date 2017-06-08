@@ -44,7 +44,6 @@ var onRun = function(context) {
     hud.standardWindowButton(NSWindowZoomButton).setHidden(true);
 
 
-	// hud.setTitle('Heads Up');
 	hud.setTitlebarAppearsTransparent(true);
 
 	hud.becomeKeyWindow();
@@ -55,7 +54,14 @@ var onRun = function(context) {
 	// Make this a long-running CocoaScript
 	COScript.currentCOScript().setShouldKeepAround_(true);
 
-	// hud.center();
+	var webView = WebView.alloc().initWithFrame(NSMakeRect(0, -24, windowWidth, windowHeight));
+    var windowObject = webView.windowScriptObject();
+
+
+    webView.setMainFrameURL_(context.plugin.urlForResourceNamed("hud.html").path());
+    // webView.reload(null);
+
+	hud.contentView().addSubview(webView);
 	hud.makeKeyAndOrderFront(nil);
 
 	var closeButton = hud.standardWindowButton(NSWindowCloseButton);
