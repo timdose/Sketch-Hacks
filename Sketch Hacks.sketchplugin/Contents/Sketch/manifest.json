@@ -27,13 +27,13 @@
     {
       "name": "Create Link Underline",
       "identifier": "com.timdose.sketch.link.underline",
-      "shortcut": "option control command u",
+      "shortcut": "option control command l",
       "script": "Create Link Underline.js"
     },
     {
       "name": "Heads up",
       "identifier": "com.timdose.sketch.util.headsup",
-      "shortcut": "option control command h",
+      "shortcut": "option control command u",
       "script": "Heads Up.js"
     },
     {
@@ -73,7 +73,8 @@
       "com.timdose.sketch.util.stackvertically",
       "com.timdose.sketch.util.smartfitartboardheight",
       "com.timdose.sketch.util.movemargintobottom",
-      "com.timdose.sketch.select.selectcurrentandbelow"
+      "com.timdose.sketch.select.selectcurrentandbelow",
+      "com.timdose.sketch.util.headsup"
 
     ]
   }

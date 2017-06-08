@@ -1,3 +1,5 @@
+const ACCEPTABLE_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin']
+
 function getParentGroup(context) {
     doc = context.document;
     selection = context.selection;
@@ -20,9 +22,17 @@ function getLayersInGroup(group) {
     for (var i = 0; i < group.layers().count(); i++) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
-        if ( layer.name() != '*margin') {
+        var notMargin = true;
+        for ( var j = 0; j < ACCEPTABLE_MARGIN_NAMES.length; j++ ) {
+            if ( layer.name() == ACCEPTABLE_MARGIN_NAMES[j] ) {
+                notMargin = false;
+            }
+        }
+
+        if ( notMargin ) {
             layers.push(layer);
         }
+        
     }
     return layers;
 }
@@ -31,9 +41,15 @@ function getMargin(group) {
     for (var i = 0; i < group.layers().count(); i++) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
-        if ( layer.name() == '*margin' ) {
-            return layer;
+
+        for ( var j = 0; j < ACCEPTABLE_MARGIN_NAMES.length; j++ ) {
+            var acceptableMarginName = ACCEPTABLE_MARGIN_NAMES[j];
+            if ( layer.name() == acceptableMarginName ) {
+                return layer;
+            }
         }
+
+        
     }
 }
 

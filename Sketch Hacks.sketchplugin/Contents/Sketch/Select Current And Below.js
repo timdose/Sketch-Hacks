@@ -9,7 +9,8 @@ var onRun = function(context) {
   var scope = selection.parentGroup().layers()//.array();
 
   // calculate the bottom position of the selected layer
-  var bottom = selection.absoluteRect().y() + selection.absoluteRect().height();
+  // var bottom = selection.absoluteRect().y() + selection.absoluteRect().height();
+  var bottom = selection.absoluteRect().y();
 
   // set up the predicate and receive an array of matched layers
   var predicate = NSPredicate.predicateWithFormat("absoluteRect.y >= %@", bottom);

@@ -35,10 +35,13 @@ var onRun = function (context) {
 				var baselineShift = Math.floor(layer.lineHeight()/2) + layer.fontSize();
 				var start = {x:layer.frame().x(), y:layer.frame().y()-.5+baselineShift}
 				var length = layer.frame().width();
+				// *** TODO: get color from layer
 				var shape = createHorizontalLine(start, length, COLOR_STRING, DASH_PATTERN)
 				doc.currentPage().addLayers([shape]);
 			}
-		};
+			layer.setIsSelected(false);
+			shape.setIsSelected(true);
+		}
 	}
 
 	function getSelectedLayers(context, onlyLayersOfType) {
@@ -53,6 +56,7 @@ var onRun = function (context) {
 	}
 
 	var selectedLayers = getSelectedLayers(context);
+
 	if (selectedLayers !== false ) {
 		createLinkUnderline(doc, selectedLayers);
 	}
