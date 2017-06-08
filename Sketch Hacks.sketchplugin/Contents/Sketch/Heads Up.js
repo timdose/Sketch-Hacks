@@ -16,9 +16,7 @@ var onRun = function(context) {
 	if (threadDictionary[identifier]) {
 	    doc.showMessage('already open! closing...');
 	    hud = threadDictionary[identifier]
-	    threadDictionary.removeObjectForKey(identifier);
-	    COScript.currentCOScript().setShouldKeepAround(false);
-	    hud.close();
+	    closeHud();
 	    return;
 	}
 
@@ -52,11 +50,16 @@ var onRun = function(context) {
 
 	var closeButton = hud.standardWindowButton(NSWindowCloseButton);
     closeButton.setCOSJSTargetFunction(function(sender) {
-        COScript.currentCOScript().setShouldKeepAround(false);
-        threadDictionary.removeObjectForKey(identifier);
-        hud.close();
+        closeHud();
     });
     closeButton.setAction("callAction:");
+
+    function closeHud() {
+    	doc.showMessage('closing!');
+    	COScript.currentCOScript().setShouldKeepAround(false);
+        threadDictionary.removeObjectForKey(identifier);
+        hud.close();
+    }
 
 	doc.showMessage('heads up end');
 }
