@@ -1,5 +1,10 @@
 @import 'MochaJSDelegate.js';
 
+function mouseInCanvasViewForDocument(document) {
+    // var mouseInWindow = document.documentWindow().convertScreenToBase(NSEvent.mouseLocation());
+    var mouseInWindow = document.documentWindow().convertScreenToBase(NSEvent.mouseLocation());
+    return document.currentView().convertPoint_fromView(mouseInWindow,null);    
+}
 
 var onRun = function(context) {
 	var hud;
@@ -20,11 +25,16 @@ var onRun = function(context) {
 	    return;
 	}
 
+
 	var windowWidth = 200;
 	var windowHeight = 150;
 
+	var mouseLocation = NSEvent.mouseLocation();
+	var windowX = mouseLocation.x-windowWidth/2;
+	var windowY = mouseLocation.y-windowHeight+20;
+
 	hud = NSPanel.alloc().init();
-	hud.setFrame_display(NSMakeRect(0, 0, windowWidth, windowHeight), true);
+	hud.setFrame_display(NSMakeRect(windowX, windowY, windowWidth, windowHeight), true);
 
 	hud.setStyleMask(NSTexturedBackgroundWindowMask | NSTitledWindowMask | NSClosableWindowMask);
 	hud.setBackgroundColor(NSColor.whiteColor());
@@ -34,7 +44,7 @@ var onRun = function(context) {
     hud.standardWindowButton(NSWindowZoomButton).setHidden(true);
 
 
-	hud.setTitle('Heads Up');
+	// hud.setTitle('Heads Up');
 	hud.setTitlebarAppearsTransparent(true);
 
 	hud.becomeKeyWindow();
@@ -45,7 +55,7 @@ var onRun = function(context) {
 	// Make this a long-running CocoaScript
 	COScript.currentCOScript().setShouldKeepAround_(true);
 
-	hud.center();
+	// hud.center();
 	hud.makeKeyAndOrderFront(nil);
 
 	var closeButton = hud.standardWindowButton(NSWindowCloseButton);
