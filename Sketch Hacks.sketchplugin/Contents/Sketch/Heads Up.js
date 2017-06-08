@@ -17,6 +17,7 @@ var onRun = function(context) {
 	    doc.showMessage('already open! closing...');
 	    hud = threadDictionary[identifier]
 	    threadDictionary.removeObjectForKey(identifier);
+	    COScript.currentCOScript().setShouldKeepAround(false);
 	    hud.close();
 	    return;
 	}
@@ -29,6 +30,10 @@ var onRun = function(context) {
 
 	hud.setStyleMask(NSTexturedBackgroundWindowMask | NSTitledWindowMask | NSClosableWindowMask);
 	hud.setBackgroundColor(NSColor.whiteColor());
+
+	// Only show close button
+    hud.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true);
+    hud.standardWindowButton(NSWindowZoomButton).setHidden(true);
 
 
 	hud.setTitle('Heads Up');
