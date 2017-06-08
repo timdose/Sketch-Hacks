@@ -32,6 +32,7 @@ var onRun = function(context) {
 
 
 	hud.setTitle('Heads Up');
+	hud.setTitlebarAppearsTransparent(true);
 
 	hud.becomeKeyWindow();
 	hud.setLevel(NSFloatingWindowLevel);
@@ -39,7 +40,7 @@ var onRun = function(context) {
 	threadDictionary[identifier] = hud;
 
 	// Make this a long-running CocoaScript
-	COScript.currentCOScript().setShouldKeepAround_(false);
+	COScript.currentCOScript().setShouldKeepAround_(true);
 
 	hud.center();
 	hud.makeKeyAndOrderFront(nil);
@@ -52,5 +53,5 @@ var onRun = function(context) {
     });
     closeButton.setAction("callAction:");
 
-	doc.showMessage('heads up end!!!');
+	doc.showMessage('heads up end');
 }
