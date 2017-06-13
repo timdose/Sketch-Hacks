@@ -1,14 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>HSL ColorPicker</title>
-<link rel="stylesheet" href="style.css?version=1">
+	<meta charset="utf-8">
+	<title>Sketch App Heads Up</title>
+	<!-- <link rel="stylesheet" href="style.css?version=22"> -->
+	<script src="jquery-3.2.1.min.js"></script>
+	<style>
+
+		body {
+		    margin: 0;
+		    font: 11px/14px "SF UI Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+		    color: #252525;
+		    background: #fff;
+		    height: 250px;
+		}
+
+		.clearfix:after {
+		    content: "";
+		    display: block;
+		    height: 0;
+		    clear: both;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		.container {
+			width: 100%;
+			display: flex;
+			height: 100%;
+			align-items: stretch;
+		}
+
+		.column {
+			width: 50%;
+			padding: 5px;
+		}
+
+		.swatch {
+			width: 20px;
+			height: 20px;
+			border: 1px solid rgba(0,0,0,0.15);
+			border-radius: 3px;
+			background: red;
+			float: left;
+			margin-right: 4px;
+			margin-bottom: 4px;
+		}
+		
+		.group {
+			margin-bottom: 10px;
+		}
+
+		.color-group {
+			width: 192px;
+		}
+
+		.label {
+			font-weight: 700;
+			border-bottom: 1px solid #ddd;
+			margin-bottom: 5px;
+		}
+
+		#debug {
+			padding: 0 5px;
+			font-size: 10px;
+			color: #aaa;
+		}
+	</style>
 </head>
 <body>
 <div class="container">
-	<div class="square"></div>
-	<div class="square"></div>
+	<div id="column1" class="column">
+		<p>stuff</p>
+	</div>
+	<div id="column2" class="column">
+		<div id="global-fill-colors" class="clearfix group color-group">
+			<div class="label">Fill</div>
+			<div id="global-fill-swatch-0" class="global-fill-swatch swatch" data-color="#ff9933"></div>
+			<div id="global-fill-swatch-1" class="global-fill-swatch swatch" data-color="#ffffff"></div>
+			<div id="global-fill-swatch-2" class="global-fill-swatch swatch" data-color="#ff0000"></div>
+			<div id="global-fill-swatch-3" class="global-fill-swatch swatch" data-color="#00ff00"></div>
+			<div id="global-fill-swatch-4" class="global-fill-swatch swatch" data-color="#0000ff"></div>
+			<div id="global-fill-swatch-5" class="global-fill-swatch swatch" data-color="#ffff00"></div>
+			<div id="global-fill-swatch-6" class="global-fill-swatch swatch" data-color="#00ffff"></div>
+			<div id="global-fill-swatch-7" class="global-fill-swatch swatch" data-color="#000000"></div>
+			<div id="global-fill-swatch-8" class="global-fill-swatch swatch" data-color="#ff9933"></div>
+			<div id="global-fill-swatch-9" class="global-fill-swatch swatch" data-color="#ffffff"></div>
+			<div id="global-fill-swatch-10" class="global-fill-swatch swatch" data-color="#ff0000"></div>
+			<div id="global-fill-swatch-11" class="global-fill-swatch swatch" data-color="#00ff00"></div>
+			<div id="global-fill-swatch-12" class="global-fill-swatch swatch" data-color="#0000ff"></div>
+			<div id="global-fill-swatch-13" class="global-fill-swatch swatch" data-color="#ffff00"></div>
+			<div id="global-fill-swatch-14" class="global-fill-swatch swatch" data-color="#00ffff"></div>
+			<div id="global-fill-swatch-15" class="global-fill-swatch swatch" data-color="#000000"></div>
+		</div>
+		<div id="global-border-colors" class="clearfix group color-group">
+			<div class="label">Border</div>
+			<div id="global-border-swatch-0" class="global-border-swatch swatch" data-color="#ff9933"></div>
+			<div id="global-border-swatch-1" class="global-border-swatch swatch" data-color="#ffffff"></div>
+			<div id="global-border-swatch-2" class="global-border-swatch swatch" data-color="#ff0000"></div>
+			<div id="global-border-swatch-3" class="global-border-swatch swatch" data-color="#00ff00"></div>
+			<div id="global-border-swatch-4" class="global-border-swatch swatch" data-color="#0000ff"></div>
+			<div id="global-border-swatch-5" class="global-border-swatch swatch" data-color="#ffff00"></div>
+			<div id="global-border-swatch-6" class="global-border-swatch swatch" data-color="#00ffff"></div>
+			<div id="global-border-swatch-7" class="global-border-swatch swatch" data-color="#000000"></div>
+			<div id="global-border-swatch-8" class="global-border-swatch swatch" data-color="#ff9933"></div>
+			<div id="global-border-swatch-9" class="global-border-swatch swatch" data-color="#ffffff"></div>
+			<div id="global-border-swatch-10" class="global-border-swatch swatch" data-color="#ff0000"></div>
+			<div id="global-border-swatch-11" class="global-border-swatch swatch" data-color="#00ff00"></div>
+			<div id="global-border-swatch-12" class="global-border-swatch swatch" data-color="#0000ff"></div>
+			<div id="global-border-swatch-13" class="global-border-swatch swatch" data-color="#ffff00"></div>
+			<div id="global-border-swatch-14" class="global-border-swatch swatch" data-color="#00ffff"></div>
+			<div id="global-border-swatch-15" class="global-border-swatch swatch" data-color="#000000"></div>
+		</div>
+	</div>
+
+	
 </div> <!-- .container -->
+<div id="debug">debug</div>
+
+
+<script>
+	var square1 = document.getElementById('square1');
+
+	$('.swatch').each(function(){
+		var color = $(this).data('color');
+		$(this).css('background',color);
+	});
+
+	$('.swatch').click(function(){
+		$('#debug').text($(this).data('color'));
+	});
+
+	function externalCall(message) {
+		$('#debug').text(message);
+	}
+</script>
+
+
 </body>
 </html>
+
+

@@ -26,12 +26,12 @@ var onRun = function(context) {
 	}
 
 
-	var windowWidth = 200;
-	var windowHeight = 150;
+	var windowWidth = 500;
+	var windowHeight = 300;
 
 	var mouseLocation = NSEvent.mouseLocation();
 	var windowX = mouseLocation.x-windowWidth/2;
-	var windowY = mouseLocation.y-windowHeight+20;
+	var windowY = mouseLocation.y-windowHeight+56;
 
 	hud = NSPanel.alloc().init();
 	hud.setFrame_display(NSMakeRect(windowX, windowY, windowWidth, windowHeight), true);
@@ -54,12 +54,21 @@ var onRun = function(context) {
 	// Make this a long-running CocoaScript
 	COScript.currentCOScript().setShouldKeepAround_(true);
 
-	var webView = WebView.alloc().initWithFrame(NSMakeRect(0, -24, windowWidth, windowHeight));
+	var webView = WebView.alloc().initWithFrame(NSMakeRect(0, -19, windowWidth, windowHeight));
     var windowObject = webView.windowScriptObject();
+    var delegate = new MochaJSDelegate({
 
+            "webView:didFinishLoadForFrame:" : (function(webView, webFrame) {
 
+                windowObject.evaluateWebScript(
+                    'externalCall(\'hello from CocoaScript\')'
+                );
+
+            })
+    });
+
+    webView.setFrameLoadDelegate_(delegate.getClassInstance());
     webView.setMainFrameURL_(context.plugin.urlForResourceNamed("hud.html").path());
-    // webView.reload(null);
 
 	hud.contentView().addSubview(webView);
 	hud.makeKeyAndOrderFront(nil);
@@ -77,5 +86,5 @@ var onRun = function(context) {
         hud.close();
     }
 
-	doc.showMessage('heads up end');
+	// doc.showMessage('heads up end');
 }
