@@ -7,6 +7,24 @@ var onRun = function (context) {
 	const COLOR_STRING = "#2BBFED";
 	const DASH_PATTERN = [1,2,1,2];
 
+	function getFillColor(layer) {
+	    if (layer.class() == "MSShapeGroup") {
+	        var fills = layer.style().enabledFills();
+	        if (fills.count() > 0) {
+	            if (fills.lastObject().fillType() == 0) {
+	                return fills.lastObject().color();
+	            } else {
+	                return null;
+	            }
+	        } else {
+	            return null;
+	        }
+	    }
+	    if (layer.class() == "MSTextLayer") {
+	        return layer.textColor();
+	    }
+	}
+
 	function createLine(from, to, colorString, dashPattern ){
 		var path = NSBezierPath.bezierPath();
 		path.moveToPoint(NSMakePoint(from.x,from.y));
@@ -41,6 +59,7 @@ var onRun = function (context) {
 			}
 			layer.setIsSelected(false);
 			shape.setIsSelected(true);
+			shape.
 		}
 	}
 
