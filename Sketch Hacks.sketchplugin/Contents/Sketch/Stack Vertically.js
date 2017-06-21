@@ -28,7 +28,9 @@ var onRun = function (context) {
 
         // convert selection to standard array
         for (var i = 0; i < selection.count(); i++) {
-            elements.push(selection[i]);
+            if ( ! selection[i].isLocked() && selection[i].name() != '*bg' ) {
+                elements.push(selection[i]);
+            }
         }
 
         // sort elements by top position
