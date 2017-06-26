@@ -61,9 +61,21 @@ var onRun = function (context) {
 			var layer = layers.objectAtIndex(i);
 
 			if (layer.className() == 'MSTextLayer' ) {
-				var baselineShift = Math.floor(layer.lineHeight()/2) + layer.fontSize();
+				// var baselineShift = Math.floor(layer.lineHeight()/2) + layer.fontSize();
+				// var baselineShift = 0;
+				var lineHeight = layer.lineHeight();
+				var fontSize = layer.fontSize();
+				var offset = layer.lineHeight() - layer.fontSize();
+
+				if ( lineHeight == 0 ) {
+					offset = fontSize;
+				}
+
+				log( 'offset: ' + offset );
+				// var baselineShift = lineHeight;
+
 				// var start = {x:layer.absoluteRect().rulerX(), y:layer.absoluteRect().rulerY()-.5+baselineShift}
-				var start = {x:layer.frame().x(), y:layer.frame().y()-.5+baselineShift}
+				var start = {x:layer.frame().x(), y:layer.frame().y()-.5+offset}
 				var length = layer.frame().width();
 				var color = getFillColor(layer);
 				var shape = createHorizontalLine(start, length, color, DASH_PATTERN)
