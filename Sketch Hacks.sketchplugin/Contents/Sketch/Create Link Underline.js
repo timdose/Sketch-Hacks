@@ -62,12 +62,13 @@ var onRun = function (context) {
 
 			if (layer.className() == 'MSTextLayer' ) {
 				var baselineShift = Math.floor(layer.lineHeight()/2) + layer.fontSize();
-				var start = {x:layer.absoluteRect().rulerX(), y:layer.absoluteRect().rulerY()-.5+baselineShift}
+				// var start = {x:layer.absoluteRect().rulerX(), y:layer.absoluteRect().rulerY()-.5+baselineShift}
+				var start = {x:layer.frame().x(), y:layer.frame().y()-.5+baselineShift}
 				var length = layer.frame().width();
 				var color = getFillColor(layer);
 				var shape = createHorizontalLine(start, length, color, DASH_PATTERN)
-				var artboard = artboardForObject(layer);
-				artboard.addLayers([shape]);
+				// var artboard = artboardForObject(layer);
+				layer.parentGroup().addLayers([shape]);
 			}
 			layer.setIsSelected(false);
 			shape.setIsSelected(true);
