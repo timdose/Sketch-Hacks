@@ -59,6 +59,17 @@
       "identifier": "com.timdose.sketch.select.selectcurrentandbelow",
       "shortcut": "option control command b",
       "script": "Select Current And Below.js"
+    },
+    {
+      "script": "Annotation.js",
+      "name": "Annotation",
+      "handlers" : {
+        "run": "onRun",
+        "actions": {
+          "LayersMoved.finish": "onLayersMoved"
+        }
+      },
+      "identifier": "com.timdose.sketch.annotation"
     }
     
     
