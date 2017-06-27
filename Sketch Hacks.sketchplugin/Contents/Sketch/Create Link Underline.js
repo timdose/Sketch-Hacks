@@ -17,6 +17,26 @@ var onRun = function (context) {
 	  }
 	};
 
+	function createGroup( layers ) {
+		if (layers.length === 0 ) {
+			return false;
+		}
+
+		var groupObject = MSLayerGroup.new();
+		var targetGroup = layers[0].parentGroup();
+		targetGroup.addLayers([groupObject]);
+		groupObject.setName('link');
+
+		for ( var i = 0; i < layers.length; i++ ) {
+			var layer = layers[i];
+			var parent = layer.parentGroup();
+			parent.removeLayer(layer);
+			groupObject.addLayers([layer]);
+		}
+
+		groupObject.resizeToFitChildrenWithOption(1);
+	}
+
 	function getFillColor(layer) {
 	    if (layer.class() == "MSShapeGroup") {
 	        var fills = layer.style().enabledFills();
@@ -82,9 +102,10 @@ var onRun = function (context) {
 				// var artboard = artboardForObject(layer);
 				layer.parentGroup().addLayers([shape]);
 			}
-			layer.setIsSelected(false);
-			shape.setIsSelected(true);
+			// layer.setIsSelected(false);
+			// shape.setIsSelected(true);
 			shape.setName('underline');
+			createGroup([layer,shape])
 			// shape.
 		}
 	}
