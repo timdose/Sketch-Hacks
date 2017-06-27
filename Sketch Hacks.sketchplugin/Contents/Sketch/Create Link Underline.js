@@ -85,17 +85,18 @@ var onRun = function (context) {
 				// var baselineShift = 0;
 				var lineHeight = layer.lineHeight();
 				var fontSize = layer.fontSize();
-				var offset = layer.lineHeight() - layer.fontSize();
 
 				if ( lineHeight == 0 ) {
-					offset = fontSize;
+					lineHeight = fontSize;
 				}
+
+				var offset = Math.ceil( (lineHeight + fontSize)/2 ) + .5 + 2;
 
 				log( 'offset: ' + offset );
 				// var baselineShift = lineHeight;
 
 				// var start = {x:layer.absoluteRect().rulerX(), y:layer.absoluteRect().rulerY()-.5+baselineShift}
-				var start = {x:layer.frame().x(), y:layer.frame().y()-.5+offset}
+				var start = {x:layer.frame().x(), y:layer.frame().y()+offset}
 				var length = layer.frame().width();
 				var color = getFillColor(layer);
 				var shape = createHorizontalLine(start, length, color, DASH_PATTERN)
