@@ -1,3 +1,10 @@
+exports.getBaseline = function (fontSize, lineHeight) {
+	if (lineHeight == 0 ) {
+		return Math.round(fontSize*.75);
+	}
+	return Math.ceil((fontSize + lineHeight)/2);
+}
+
 var onRun = function (context) {
 
 	var doc = context.document;
@@ -16,6 +23,7 @@ var onRun = function (context) {
 	    return null;
 	  }
 	};
+
 
 	function createGroup( layers ) {
 		if (layers.length === 0 ) {
