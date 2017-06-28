@@ -109,7 +109,7 @@ var onRun = function (context) {
 			// layer.setIsSelected(false);
 			// shape.setIsSelected(true);
 			shape.setName('underline');
-			createGroup([layer,shape])
+			createGroup([shape,layer])
 			// shape.
 		}
 	}
