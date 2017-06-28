@@ -91,7 +91,7 @@ var onRun = function (context) {
 				var lineHeight = layer.lineHeight();
 				var fontSize = layer.fontSize();
 
-				var offset = getBaseline(fontSize, lineHeight) + .5 + 2;
+				var offset = getBaseline(fontSize, lineHeight) + .5 + 3;
 
 				log( 'fontSize: ' + fontSize );
 				log( 'lineHeight: ' + lineHeight );

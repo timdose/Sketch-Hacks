@@ -15,8 +15,14 @@ var onRun = function(context) {
   // set up the predicate and receive an array of matched layers
   var predicate = NSPredicate.predicateWithFormat("absoluteRect.y >= %@", bottom);
   var queryResult = scope.filteredArrayUsingPredicate(predicate);
+  log(queryResult);
 
   // select all layers that match the query
-  doc.currentPage().selectLayers(queryResult);
-  selection.setIsSelected(true);
+  // doc.currentPage().selectLayers(queryResult);
+  // selection.setIsSelected(true);
+
+  for ( var i = 0; i < queryResult.count(); i++ ) {
+    log(queryResult[i]);
+    queryResult.objectAtIndex(i).setIsSelected(true);
+  }
 };
