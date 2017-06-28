@@ -1,9 +1,6 @@
-exports.getBaseline = function (fontSize, lineHeight) {
-	if (lineHeight == 0 ) {
-		return Math.round(fontSize*.75);
-	}
-	return Math.ceil((fontSize + lineHeight)/2);
-}
+@import 'util.js';
+
+log(getBaseline);
 
 var onRun = function (context) {
 
@@ -94,12 +91,10 @@ var onRun = function (context) {
 				var lineHeight = layer.lineHeight();
 				var fontSize = layer.fontSize();
 
-				if ( lineHeight == 0 ) {
-					lineHeight = fontSize;
-				}
+				var offset = getBaseline(fontSize, lineHeight) + .5 + 2;
 
-				var offset = Math.ceil( (lineHeight + fontSize)/2 ) + .5 + 2;
-
+				log( 'fontSize: ' + fontSize );
+				log( 'lineHeight: ' + lineHeight );
 				log( 'offset: ' + offset );
 				// var baselineShift = lineHeight;
 

@@ -1,4 +1,4 @@
-var getBaseline = require('./Create Link Underline').getBaseline;
+var getBaseline = require('./util').getBaseline;
 
 var allClear = true;
 
