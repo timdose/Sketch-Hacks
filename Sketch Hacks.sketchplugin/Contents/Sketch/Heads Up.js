@@ -95,14 +95,73 @@ var onRun = function(context) {
     function runReceivedCommand(locationHash) {
     	var command = parseCommand(locationHash);
     	log( 'COMMAND RECEIVED: ' + command.name + ' ARGS: ' + command.args.join(' , ') );
+    	log( 'dispatching to ' + command.name );
+    	if ( command.name == 'setColor' ) {
+    		setColor(command.args[0],command.args[1])
+    	}
+
     }
 
     function parseCommand(hashString) {
+    	hashString = hashString.substr(1)
     	var split = hashString.split(':');
     	return {
     		name: split[0],
     		args: split[1].split(';')
     	}
     }
+
+    function getSelectedLayers(context) {
+		var selection = context.selection;
+
+		if (selection.count() == 0) {
+		    context.document.showMessage("Please select at least one layer.");
+		    return false;
+		}
+
+		return selection;
+	}
+
+    function setColor(type, colorString){
+    	var color = MSImmutableColor.colorWithSVGString(colorString).newMutableCounterpart();
+    	var selection = getSelectedLayers(context);
+    	for (var i = 0; i < selection.count(); i++ ) {
+    		if ( type == 'border' ) {
+    			setBorderColor(selection.objectAtIndex(i), color);
+    		} else {
+    			setFillColor(selection.objectAtIndex(i), color);
+    		}
+    	}
+    }
 	// doc.showMessage('heads up end');
+
+
+	function setFillColor(layer, color) {
+	    if (layer.class() == "MSShapeGroup") {
+	        var fills = layer.style().enabledFills();
+	        if (fills.count() > 0 && fills.lastObject().fillType() == 0) {
+	            fills.lastObject().setColor(color);
+	        } else {
+	            var fill = layer.style().addStylePartOfType(0);
+	            fill.setFillType(0);
+	            fills.lastObject().setColor(color);
+	        }
+	    }
+	    if (layer.class() == "MSTextLayer") {
+	        layer.setTextColor(color);
+	    }
+	}
+
+	function setBorderColor(layer, color) {
+	    if (layer.class() == "MSShapeGroup") {
+	        var borders = layer.style().enabledBorders();
+	        if (borders.count() > 0 ) {
+	            borders.lastObject().setColor(color);
+	        } else {
+	            var border = layer.style().addStylePartOfType(1);
+	            // border.setBorderType(1);
+	            borders.lastObject().setColor(color);
+	        }
+	    }
+	}
 }
