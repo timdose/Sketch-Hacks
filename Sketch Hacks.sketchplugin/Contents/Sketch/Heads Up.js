@@ -58,13 +58,19 @@ var onRun = function(context) {
     var windowObject = webView.windowScriptObject();
     var delegate = new MochaJSDelegate({
 
-            "webView:didFinishLoadForFrame:" : (function(webView, webFrame) {
+        "webView:didFinishLoadForFrame:" : (function(webView, webFrame) {
 
-                windowObject.evaluateWebScript(
-                    'externalCall(\'hello from CocoaScript\')'
-                );
+            windowObject.evaluateWebScript(
+                'externalCall(\'hello from CocoaScript\')'
+            );
 
-            })
+        }),
+
+        "webView:didChangeLocationWithinPageForFrame:" : (function(webView, webFrame) {
+        	var locationHash = windowObject.evaluateWebScript("window.location.hash");
+
+        	runReceivedCommand(locationHash);
+        })
     });
 
     webView.setFrameLoadDelegate_(delegate.getClassInstance());
@@ -86,5 +92,17 @@ var onRun = function(context) {
         hud.close();
     }
 
+    function runReceivedCommand(locationHash) {
+    	var command = parseCommand(locationHash);
+    	log( 'COMMAND RECEIVED: ' + command.name + ' ARGS: ' + command.args.join(' , ') );
+    }
+
+    function parseCommand(hashString) {
+    	var split = hashString.split(':');
+    	return {
+    		name: split[0],
+    		args: split[1].split(';')
+    	}
+    }
 	// doc.showMessage('heads up end');
 }
