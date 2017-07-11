@@ -4,9 +4,9 @@ var onRun = function( context ) {
 
 
 var onLayersMoved = function( context ) {
-	log('layers moved');
-	log(context.actionContext);
-	repositionNotes( context );
+	// log('layers moved');
+	// log(context.actionContext);
+	// repositionNotes( context );
 	
 }
 
