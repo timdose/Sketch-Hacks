@@ -39,10 +39,11 @@ var onRun = function (context) {
         // get the first position
         top = elements[0].frame().top();
 
-        elements.each(function () {
-            this.frame().setTop(top);
-            top += this.frame().height() + spacing;
-        })
+        for ( var i = 0; i < elements.length; i++ ) {
+            elements[i].frame().setTop(top);
+            top += elements[i].frame().height() + spacing;
+        }
+
     } else if (selection.count() == 1) {
         var spacing = [[doc askForUserInput:"Shift by" ofType:1 initialValue:"0"] integerValue];
         top = selection[0].frame().top() + spacing;
