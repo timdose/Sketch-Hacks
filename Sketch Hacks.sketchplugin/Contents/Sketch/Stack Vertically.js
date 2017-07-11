@@ -45,9 +45,7 @@ var onRun = function (context) {
         }
 
     } else if (selection.count() == 1) {
-        var spacing = [[doc askForUserInput:"Shift by" ofType:1 initialValue:"0"] integerValue];
-        top = selection[0].frame().top() + spacing;
-        selection[0].frame().setTop(top);
+        doc.showMessage('Please select at least 2 layers.')
     }
 
 }
