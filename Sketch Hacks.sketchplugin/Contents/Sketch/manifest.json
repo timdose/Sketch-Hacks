@@ -49,10 +49,10 @@
       "script": "Smart Fit Artboard Height.js"
     },
     {
-      "name": "Move Margin To Bottom",
-      "identifier": "com.timdose.sketch.util.movemargintobottom",
+      "name": "Reposition Margins",
+      "identifier": "com.timdose.sketch.util.repositionmargins",
       "shortcut": "option control command m",
-      "script": "Move Margin To Bottom.js"
+      "script": "Reposition Margins.js"
     },
     {
       "name": "Select Current & Below",
@@ -83,7 +83,7 @@
       "com.timdose.sketch.link.underline",
       "com.timdose.sketch.util.stackvertically",
       "com.timdose.sketch.util.smartfitartboardheight",
-      "com.timdose.sketch.util.movemargintobottom",
+      "com.timdose.sketch.util.repositionmargins",
       "com.timdose.sketch.select.selectcurrentandbelow",
       "com.timdose.sketch.util.headsup"
 
