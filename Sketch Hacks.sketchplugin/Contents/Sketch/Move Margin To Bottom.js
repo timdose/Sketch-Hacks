@@ -3,7 +3,9 @@
 var deselectAll = com.timdose.selection.deselectAll;
 var expandSelectionWithLayer = com.timdose.selection.expandSelectionWithLayer;
 
-const ACCEPTABLE_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin']
+const BOTTOM_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin', '*margin-bottom', '*bottom-margin'];
+const TOP_MARGIN_NAMES = ['*marginTop', '*topMargin', '*margin-top', '*top-margin'];
+const ALL_MARGIN_NAMES = BOTTOM_MARGIN_NAMES.concat(TOP_MARGIN_NAMES);
 
 function getParentGroup(context) {
     doc = context.document;
@@ -22,14 +24,14 @@ function getParentGroup(context) {
 }
 
 
-function getLayersInGroup(group) {
+function getNonMarginLayersInGroup(group) {
     var layers = [];
     for (var i = 0; i < group.layers().count(); i++) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
         var notMargin = true;
-        for ( var j = 0; j < ACCEPTABLE_MARGIN_NAMES.length; j++ ) {
-            if ( layer.name() == ACCEPTABLE_MARGIN_NAMES[j] ) {
+        for ( var j = 0; j < ALL_MARGIN_NAMES.length; j++ ) {
+            if ( layer.name() == ALL_MARGIN_NAMES[j] ) {
                 notMargin = false;
             }
         }
@@ -42,13 +44,24 @@ function getLayersInGroup(group) {
     return layers;
 }
 
-function getMargin(group) {
+function getMargin(group, type) {
+    if ( type === undefined ) {
+        type = 'bottom';
+    }
+
+    var marginNames;
+
+    if ( type == 'bottom' ) {
+        marginNames = BOTTOM_MARGIN_NAMES;
+    } else {
+        marginNames = TOP_MARGIN_NAMES;
+    }
     for (var i = 0; i < group.layers().count(); i++) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
 
-        for ( var j = 0; j < ACCEPTABLE_MARGIN_NAMES.length; j++ ) {
-            var acceptableMarginName = ACCEPTABLE_MARGIN_NAMES[j];
+        for ( var j = 0; j < marginNames.length; j++ ) {
+            var acceptableMarginName = marginNames[j];
             if ( layer.name() == acceptableMarginName ) {
                 return layer;
             }
@@ -66,9 +79,9 @@ function sortBottom(a, b) {
 var onRun = function (context) {
     var parentGroup = getParentGroup(context);
 
-    var layers = getLayersInGroup(parentGroup);
-    var margin = getMargin(parentGroup);
-    
+    var layers = getNonMarginLayersInGroup(parentGroup);
+    var marginBottom = getMargin(parentGroup, 'bottom' );
+    var marginTop = getMargin(parentGroup, 'top' );
 
     // old school variable
     var doc = context.document;
@@ -89,9 +102,11 @@ var onRun = function (context) {
 
                 // Calculate the bottom edge position
                 var bottom = layer.frame().y() + layer.frame().height();
+                var top = layer.frame().y();
                 meta.push({
                     layer: layer,
-                    bottom: bottom
+                    bottom: bottom,
+                    top: top
                 });
             }
         }
@@ -99,11 +114,17 @@ var onRun = function (context) {
         // Sort the layers by bottom position, descending
         meta.sort(sortBottom);
 
-        // Finally set the height of the artboard
     }
 
-    margin.frame().setTop(meta[0].bottom)
-    expandSelectionWithLayer(margin);
+    log(meta[meta.length-1]);
+    var marginTopOffset = meta[meta.length-1].top - marginTop.frame().height();
+    log(marginTopOffset);
+    marginTop.frame().setTop(marginTopOffset)
+    expandSelectionWithLayer(marginTop);
+
+    var marginBottomOffset = meta[0].bottom;
+    marginBottom.frame().setTop(marginBottomOffset)
+    expandSelectionWithLayer(marginBottom);
     parentGroup.resizeToFitChildrenWithOption(0);
 
 }
