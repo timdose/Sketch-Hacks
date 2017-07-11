@@ -1,3 +1,8 @@
+@import 'util.js';
+
+var deselectAll = com.timdose.selection.deselectAll;
+var expandSelectionWithLayer = com.timdose.selection.expandSelectionWithLayer;
+
 const ACCEPTABLE_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin']
 
 function getParentGroup(context) {
@@ -7,7 +12,7 @@ function getParentGroup(context) {
     if (selection.count() > 0) {
         var parent = selection[0].parentGroup();
         if (parent.className() != "MSPage") {
-            doc.currentPage().deselectAllLayers();
+            deselectAll(doc.currentPage());
             // parent.setIsSelected(true)
             return parent;
         }
@@ -98,5 +103,6 @@ var onRun = function (context) {
     }
 
     margin.frame().setTop(meta[0].bottom)
-    margin.setIsSelected(true);
+    expandSelectionWithLayer(margin);
+
 }
