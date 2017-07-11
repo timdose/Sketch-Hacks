@@ -104,5 +104,6 @@ var onRun = function (context) {
 
     margin.frame().setTop(meta[0].bottom)
     expandSelectionWithLayer(margin);
+    parentGroup.resizeToFitChildrenWithOption(0);
 
 }
