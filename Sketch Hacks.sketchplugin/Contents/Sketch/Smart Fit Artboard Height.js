@@ -1,3 +1,9 @@
+@import 'util.js';
+
+var deselectAll = com.timdose.selection.deselectAll;
+var expandSelectionWithLayer = com.timdose.selection.expandSelectionWithLayer;
+
+
 // Resizes the height of the artboard to fit all its layers
 
 // Helper functions:
@@ -30,7 +36,7 @@ var selectParentArtboards = function(context) {
       artboardsToSelect.push(artboard);
     }
   }
-  page.deselectAllLayers();
+  deselectAll(page);
 
   for (var i = 0; i < artboardsToSelect.length; i++) {
     var artboard = artboardsToSelect[i];
@@ -89,7 +95,8 @@ var onRun = function (context) {
     }
 
     for ( var k = 0; k < selection.count(); k++ ) {
-      selection.objectAtIndex(k).setIsSelected(true);
+      deselectAll(doc.currentPage());
+      expandSelectionWithLayer(selection.objectAtIndex(k));
     }
 }
 
