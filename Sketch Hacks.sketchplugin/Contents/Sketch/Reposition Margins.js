@@ -116,15 +116,17 @@ var onRun = function (context) {
 
     }
 
-    log(meta[meta.length-1]);
     var marginTopOffset = meta[meta.length-1].top - marginTop.frame().height();
-    log(marginTopOffset);
     marginTop.frame().setTop(marginTopOffset)
-    expandSelectionWithLayer(marginTop);
 
     var marginBottomOffset = meta[0].bottom;
     marginBottom.frame().setTop(marginBottomOffset)
-    expandSelectionWithLayer(marginBottom);
     parentGroup.resizeToFitChildrenWithOption(0);
+
+    // reselect original selection
+    deselectAll(doc.currentPage());
+    for ( var i = 0; i < selection.count(); i++ ) {
+        expandSelectionWithLayer(selection.objectAtIndex(i) );        
+    }
 
 }
