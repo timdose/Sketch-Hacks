@@ -116,12 +116,17 @@ var onRun = function (context) {
 
     }
 
-    var marginTopOffset = meta[meta.length-1].top - marginTop.frame().height();
-    marginTop.frame().setTop(marginTopOffset)
+    if ( marginTop ) {
+        var marginTopOffset = meta[meta.length-1].top - marginTop.frame().height();
+        marginTop.frame().setTop(marginTopOffset)
+    }
 
-    var marginBottomOffset = meta[0].bottom;
-    marginBottom.frame().setTop(marginBottomOffset)
-    parentGroup.resizeToFitChildrenWithOption(0);
+    if ( marginBottom ) {
+        var marginBottomOffset = meta[0].bottom;
+        marginBottom.frame().setTop(marginBottomOffset)
+    }
+    
+    parentGroup.resizeToFitChildrenWithOption(0);        
 
     // reselect original selection
     deselectAll(doc.currentPage());
