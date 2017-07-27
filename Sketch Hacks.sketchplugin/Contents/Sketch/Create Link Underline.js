@@ -1,7 +1,5 @@
 @import 'util.js';
 
-log(getBaseline);
-
 var onRun = function (context) {
 
 	var doc = context.document;
@@ -10,6 +8,8 @@ var onRun = function (context) {
 	var length = 50;
 	const COLOR_STRING = "#2BBFED";
 	const DASH_PATTERN = [1,2,1,2];
+	var command = context.command;
+
 
 	var artboardForObject = function(object) {
 	  if (object.isKindOfClass(MSArtboardGroup)) {
@@ -81,9 +81,24 @@ var onRun = function (context) {
 		return createLine(start, {x: start.x + length, y:start.y}, color, dashPattern );
 	}
 
+	function findSiblingByName(sourceLayer, name) {
+		var siblings = sourceLayer.parentGroup().layers();
+		for (var i = 0; i < siblings.count(); i++ ) {
+			var sibling = siblings.objectAtIndex(i)
+			if ( sibling.name() ) {
+				return sibling;
+			}
+		}
+	}
+
 	function createLinkUnderline(doc, layers) {
 		for (var i = 0; i < layers.count(); i++) {
 			var layer = layers.objectAtIndex(i);
+
+			var existingUnderline = findSiblingByName(layer, '*underline');
+			if (existingUnderline !== undefined ) {
+				existingUnderline.removeFromParent();		
+			}
 
 			if (layer.className() == 'MSTextLayer' ) {
 				// var baselineShift = Math.floor(layer.lineHeight()/2) + layer.fontSize();
@@ -108,7 +123,7 @@ var onRun = function (context) {
 			}
 			// layer.setIsSelected(false);
 			// shape.setIsSelected(true);
-			shape.setName('underline');
+			shape.setName('*underline');
 			createGroup([shape,layer])
 			// shape.
 		}
