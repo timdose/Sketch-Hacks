@@ -72,6 +72,20 @@
       "identifier": "com.timdose.sketch.annotation"
     }
     
+    ,
+    {
+      "script": "Insta-Detach.js",
+      "name": "Insta-Detach",
+      "handlers" : {
+        "run": "onRun",
+        "actions": {
+          "InsertSymbol.finish": "onInsertSymbolComplete",
+          "LayersMoved.finish": "onLayersMoved"
+        }
+      },
+      "identifier": "com.timdose.sketch.instadetach"
+    }
+    
     
 
   ],
