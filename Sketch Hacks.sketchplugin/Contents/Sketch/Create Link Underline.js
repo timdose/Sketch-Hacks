@@ -85,7 +85,7 @@ var onRun = function (context) {
 		var siblings = sourceLayer.parentGroup().layers();
 		for (var i = 0; i < siblings.count(); i++ ) {
 			var sibling = siblings.objectAtIndex(i)
-			if ( sibling.name() ) {
+			if ( sibling.name() == name ) {
 				return sibling;
 			}
 		}
@@ -124,7 +124,11 @@ var onRun = function (context) {
 			// layer.setIsSelected(false);
 			// shape.setIsSelected(true);
 			shape.setName('*underline');
-			createGroup([shape,layer])
+			if ( existingUnderline === undefined ) {
+				createGroup([shape,layer])
+			} else {
+				com.timdose.arrange.sendToFront();
+			}
 			// shape.
 		}
 	}
