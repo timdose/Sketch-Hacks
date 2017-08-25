@@ -1,0 +1,21 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Sketch Hacks</title>
+		<link>https://raw.githubusercontent.com/timdose/Sketch-Hacks/master/appcast.xml</link>
+		<description>Make your Sketch life a little easier :).</description>
+		<language>en</language>
+		<item>
+			<title>Version 0.1</title>
+			<description>
+				<![CDATA[
+				<ul>
+				<li>Setting up to allow updating right from Sketch.</li>
+				</ul>
+				]]>
+			</description>
+			<enclosure url="https://github.com/timdose/Sketch-Hacks/archive/master.zip" sparkle:version="12.4" />
+		</item>
+	</channel>
+</rss>

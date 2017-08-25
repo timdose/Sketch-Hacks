@@ -4,6 +4,7 @@
   "author": "Tim Dosé",
   "version": 0.1,
   "identifier": "com.timdose.sketch.mate",
+  "appcast": "https://raw.githubusercontent.com/timdose/Sketch-Hacks/master/appcast.xml",
   "commands": [
 
     {
@@ -79,7 +80,7 @@
       "handlers" : {
         "run": "onRun",
         "actions": {
-          "InsertSymbol.finish": "onInsertSymbolComplete",
+          "HandlerLostFocus": "onInsertSymbolComplete",
           "LayersMoved.finish": "onLayersMoved"
         }
       },
