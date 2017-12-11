@@ -4,6 +4,7 @@ var onRun = function( context ) {
 
 
 var onInsertSymbolComplete = function( context ) {
+	return;
 	if ( context.actionContext.name == 'InsertSymbol' ) {
 		log( '\n\n\n----------------------------------------')
 		log( 'symbol placed');
@@ -19,10 +20,12 @@ var onInsertSymbolComplete = function( context ) {
 }
 
 var onLayersMoved = function( context ) {
+	return;
 	context.actionContext.document.showMessage('Layers moved!');
 }
 
 var onAction = function( context ) {
+	return;
 	log( '\n\naction triggered' );
 	log( context );
 	log( context.actionContext.name );
