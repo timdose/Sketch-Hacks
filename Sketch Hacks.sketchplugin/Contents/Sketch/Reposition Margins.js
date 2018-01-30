@@ -120,18 +120,20 @@ var onRun = function (context) {
 
     }
 
-    var groupTop = meta[meta.length-1].top;
-    var groupBottom = meta[0].bottom;
-    var groupHeight = groupBottom - groupTop;
+    var localTop = meta[meta.length-1].top;
+    var localBottom = meta[0].bottom;
+    var localHeight = localBottom - localTop;
+    var totalHeight = localHeight;
+
     var marginBottomOffset, marginTopOffset, height;
 
     if (marginTop !== undefined ) {
-        marginTopOffset = groupTop - marginTop.frame().height();
+        marginTopOffset = localTop - marginTop.frame().height();
         
     }
     
     if (marginBottom !== undefined ) {
-        marginBottomOffset = groupBottom;
+        marginBottomOffset = localBottom;
     }
     
     if ( marginTop ) {
@@ -143,14 +145,18 @@ var onRun = function (context) {
 
     if ( marginBottom ) {
         marginBottom.frame().setTop(marginBottomOffset)
+        
         // Move to back
         marginBottom.select_byExtendingSelection(true, false);
         NSApp.sendAction_to_from("moveToBack:", nil, doc);)
+
+        // add the height of the bottom margin to the total height
+        totalHeight += marginBottom.frame().height();
     }
 
     if ( bg ) {
-        bg.frame().setTop(groupTop);
-        bg.frame().setHeight(groupHeight);
+        bg.frame().setTop(localTop);
+        bg.frame().setHeight(totalHeight);
         bg.select_byExtendingSelection(true, false);
         NSApp.sendAction_to_from("moveToBack:", nil, doc);)
     }
