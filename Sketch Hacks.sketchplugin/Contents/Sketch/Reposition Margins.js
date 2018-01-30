@@ -5,7 +5,8 @@ var expandSelectionWithLayer = com.timdose.selection.expandSelectionWithLayer;
 
 const BOTTOM_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin', '*margin-bottom', '*bottom-margin'];
 const TOP_MARGIN_NAMES = ['*marginTop', '*topMargin', '*margin-top', '*top-margin'];
-const ALL_MARGIN_NAMES = BOTTOM_MARGIN_NAMES.concat(TOP_MARGIN_NAMES);
+const BACKGROUND_NAMES = ['*bg', '*background'];
+const ALL_NAMES = BOTTOM_MARGIN_NAMES.concat(TOP_MARGIN_NAMES).concat(BACKGROUND_NAMES);
 
 function getParentGroup(context) {
     doc = context.document;
@@ -30,8 +31,8 @@ function getNonMarginLayersInGroup(group) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
         var notMargin = true;
-        for ( var j = 0; j < ALL_MARGIN_NAMES.length; j++ ) {
-            if ( layer.name() == ALL_MARGIN_NAMES[j] ) {
+        for ( var j = 0; j < ALL_NAMES.length; j++ ) {
+            if ( layer.name() == ALL_NAMES[j] ) {
                 notMargin = false;
             }
         }
@@ -44,24 +45,26 @@ function getNonMarginLayersInGroup(group) {
     return layers;
 }
 
-function getMargin(group, type) {
+function getSpecialLayers(group, type) {
     if ( type === undefined ) {
         type = 'bottom';
     }
 
-    var marginNames;
+    var specialNames;
 
     if ( type == 'bottom' ) {
-        marginNames = BOTTOM_MARGIN_NAMES;
-    } else {
-        marginNames = TOP_MARGIN_NAMES;
+        specialNames = BOTTOM_MARGIN_NAMES;
+    } else if ( type == 'top' ) {
+        specialNames = TOP_MARGIN_NAMES;
+    } else if ( type == 'background' ) {
+        specialNames = BACKGROUND_NAMES;
     }
     for (var i = 0; i < group.layers().count(); i++) {
         // group.layers().objectAtIndex(i).setIsSelected(true);
         var layer = group.layers().objectAtIndex(i);
 
-        for ( var j = 0; j < marginNames.length; j++ ) {
-            var acceptableMarginName = marginNames[j];
+        for ( var j = 0; j < specialNames.length; j++ ) {
+            var acceptableMarginName = specialNames[j];
             if ( layer.name() == acceptableMarginName ) {
                 return layer;
             }
@@ -80,8 +83,9 @@ var onRun = function (context) {
     var parentGroup = getParentGroup(context);
 
     var layers = getNonMarginLayersInGroup(parentGroup);
-    var marginBottom = getMargin(parentGroup, 'bottom' );
-    var marginTop = getMargin(parentGroup, 'top' );
+    var marginBottom = getSpecialLayers(parentGroup, 'bottom' );
+    var marginTop = getSpecialLayers(parentGroup, 'top' );
+    var bg = getSpecialLayers(parentGroup,'background');
 
     // old school variable
     var doc = context.document;
@@ -116,14 +120,39 @@ var onRun = function (context) {
 
     }
 
+    var groupTop = meta[meta.length-1].top;
+    var groupBottom = meta[0].bottom;
+    var groupHeight = groupBottom - groupTop;
+    var marginBottomOffset, marginTopOffset, height;
+
+    if (marginTop !== undefined ) {
+        marginTopOffset = groupTop - marginTop.frame().height();
+        
+    }
+    
+    if (marginBottom !== undefined ) {
+        marginBottomOffset = groupBottom;
+    }
+    
     if ( marginTop ) {
-        var marginTopOffset = meta[meta.length-1].top - marginTop.frame().height();
+        marginTop.select_byExtendingSelection(true, false);
+        // Move to front
+        NSApp.sendAction_to_from("moveToFront:", nil, doc);)
         marginTop.frame().setTop(marginTopOffset)
     }
 
     if ( marginBottom ) {
-        var marginBottomOffset = meta[0].bottom;
         marginBottom.frame().setTop(marginBottomOffset)
+        // Move to back
+        marginBottom.select_byExtendingSelection(true, false);
+        NSApp.sendAction_to_from("moveToBack:", nil, doc);)
+    }
+
+    if ( bg ) {
+        bg.frame().setTop(groupTop);
+        bg.frame().setHeight(groupHeight);
+        bg.select_byExtendingSelection(true, false);
+        NSApp.sendAction_to_from("moveToBack:", nil, doc);)
     }
     
     parentGroup.resizeToFitChildrenWithOption(0);        
