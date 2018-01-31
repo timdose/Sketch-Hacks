@@ -120,27 +120,33 @@ var onRun = function (context) {
 
     }
 
-    var localTop = meta[meta.length-1].top;
-    var localBottom = meta[0].bottom;
-    var localHeight = localBottom - localTop;
-    var totalHeight = localHeight;
+    var contentTop = meta[meta.length-1].top;
+    var contentBottom = meta[0].bottom;
+    var contentHeight = contentBottom - contentTop;
+    var globalTop = contentTop;
+    var globalBottom = contentBottom;
+    var globalHeight = contentHeight;
 
-    var marginBottomOffset, marginTopOffset, height;
+    var marginBottomOffset;
 
     if (marginTop !== undefined ) {
-        marginTopOffset = localTop - marginTop.frame().height();
-        
+        var marginTopHeight = marginTop.frame().height();
+        globalTop = contentTop - marginTopHeight;
+        globalHeight += marginTopHeight;
     }
     
     if (marginBottom !== undefined ) {
-        marginBottomOffset = localBottom;
+        var marginBottomHeight = marginBottom.frame().height();
+        marginBottomOffset = contentBottom;
+        globalBottom = contentBottom + marginBottomHeight;
+
     }
     
     if ( marginTop ) {
+        marginTop.frame().setTop(globalTop)
         marginTop.select_byExtendingSelection(true, false);
         // Move to front
         NSApp.sendAction_to_from("moveToFront:", nil, doc);)
-        marginTop.frame().setTop(marginTopOffset)
     }
 
     if ( marginBottom ) {
@@ -151,12 +157,12 @@ var onRun = function (context) {
         NSApp.sendAction_to_from("moveToBack:", nil, doc);)
 
         // add the height of the bottom margin to the total height
-        totalHeight += marginBottom.frame().height();
+        globalHeight += marginBottom.frame().height();
     }
 
     if ( bg ) {
-        bg.frame().setTop(localTop);
-        bg.frame().setHeight(totalHeight);
+        bg.frame().setTop(globalTop);
+        bg.frame().setHeight(globalHeight);
         bg.select_byExtendingSelection(true, false);
         NSApp.sendAction_to_from("moveToBack:", nil, doc);)
     }
