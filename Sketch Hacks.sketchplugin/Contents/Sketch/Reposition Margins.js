@@ -3,8 +3,8 @@
 var deselectAll = com.timdose.selection.deselectAll;
 var expandSelectionWithLayer = com.timdose.selection.expandSelectionWithLayer;
 
-const BOTTOM_MARGIN_NAMES = ['*margin', '*marginBottom', '*bottomMargin', '*margin-bottom', '*bottom-margin'];
-const TOP_MARGIN_NAMES = ['*marginTop', '*topMargin', '*margin-top', '*top-margin'];
+const TOP_MARGIN_NAMES =    ['*marginTop',    '*topMargin',    '*margin-top',    '*top-margin',    '*borderTop',    '*topBorder',    '*border-top',    '*top-border'];
+const BOTTOM_MARGIN_NAMES = ['*marginBottom', '*bottomMargin', '*margin-bottom', '*bottom-margin', '*borderBottom', '*bottomBorder', '*border-bottom', '*bottom-border'];
 const BACKGROUND_NAMES = ['*bg', '*background'];
 const ALL_NAMES = BOTTOM_MARGIN_NAMES.concat(TOP_MARGIN_NAMES).concat(BACKGROUND_NAMES);
 
