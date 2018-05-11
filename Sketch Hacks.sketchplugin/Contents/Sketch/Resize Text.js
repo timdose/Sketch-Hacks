@@ -7,7 +7,11 @@ var onRun = function (context) {
     function parseSizeValues(userInput) {
         var result = {};
         var pieces = userInput.split('/');
-        result.fontSize = parseInt(pieces[0]);
+        if (pieces[0] === '' ) {
+            result.fontSize = -1;
+        } else {
+            result.fontSize = parseInt(pieces[0]);
+        }
         if (pieces[1] !== undefined ) {
             result.lineHeight = parseInt(pieces[1]);
         }
@@ -52,7 +56,9 @@ var onRun = function (context) {
                 var textLayer = textLayers[j];
 
                 // Calculate the line height based on the font size and multiple
-                var fontSize = newSize.fontSize;
+                if ( fontSize !== -1 ) {
+                    var fontSize = newSize.fontSize;
+                }
                 textLayer.setFontSize(fontSize);
                 
                 if (newSize.lineHeight !== undefined ) {
