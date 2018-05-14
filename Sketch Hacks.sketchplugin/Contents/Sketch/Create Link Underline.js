@@ -65,7 +65,8 @@ var onRun = function (context) {
 		path.moveToPoint(NSMakePoint(from.x,from.y));
 		path.lineToPoint(NSMakePoint(to.x,to.y));
 
-		var shape = MSShapeGroup.shapeWithBezierPath(path);
+		var mspath = MSPath.pathWithBezierPath(path)
+		var shape = MSShapeGroup.shapeWithBezierPath(mspath);
 		var border = shape.style().addStylePartOfType(1);
 		// border.color = MSImmutableColor.colorWithSVGString(colorString).newMutableCounterpart()
 		border.color = color;
