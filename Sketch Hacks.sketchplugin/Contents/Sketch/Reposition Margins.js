@@ -146,7 +146,7 @@ var onRun = function (context) {
         marginTop.frame().setTop(globalTop)
         marginTop.select_byExtendingSelection(true, false);
         // Move to front
-        NSApp.sendAction_to_from("moveToFront:", nil, doc);)
+        NSApp.sendAction_to_from("moveToFront:", nil, doc);
     }
 
     if ( marginBottom ) {
@@ -154,7 +154,7 @@ var onRun = function (context) {
         
         // Move to back
         marginBottom.select_byExtendingSelection(true, false);
-        NSApp.sendAction_to_from("moveToBack:", nil, doc);)
+        NSApp.sendAction_to_from("moveToBack:", nil, doc);
 
         // add the height of the bottom margin to the total height
         globalHeight += marginBottom.frame().height();
@@ -164,7 +164,7 @@ var onRun = function (context) {
         bg.frame().setTop(globalTop);
         bg.frame().setHeight(globalHeight);
         bg.select_byExtendingSelection(true, false);
-        NSApp.sendAction_to_from("moveToBack:", nil, doc);)
+        NSApp.sendAction_to_from("moveToBack:", nil, doc);
     }
     
     parentGroup.resizeToFitChildrenWithOption(0);        
