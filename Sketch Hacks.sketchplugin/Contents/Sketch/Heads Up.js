@@ -176,5 +176,6 @@ var onRun = function(context) {
             log('changing width of ' + layer);
             layer.frame().setWidth(width);
         }
+        closeHud();
     }
 }

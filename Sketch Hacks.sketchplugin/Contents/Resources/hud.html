@@ -216,7 +216,7 @@
     });
 
 
-    $('#width-input').on('keyup', function() {
+    $('#width-input').on('keyup', function(e) {
         if ( $('#width-input').val().length > 0 ) {
             $('#width-control').addClass('has-value');
             $('#width-input').data({state:'valid'})
@@ -224,9 +224,12 @@
             $('#width-control').removeClass('has-value');
             $('#width-input').data({state:'cleared'})
         }
+        if (e.keyCode == 13) {
+            saveWidth();
+        }
     });
 
-    $('#width-save').on('click', function() {
+    function saveWidth() {
         if ( $('#width-input').data('state') !== 'valid'  ) {
             console.log('input not valid')
             return; 
@@ -236,7 +239,9 @@
         console.log(val);
         sendCommand('setWidth', [val])
         $('#width-control').removeClass('edit');
-    });
+    }
+
+    $('#width-save').on('click', saveWidth);
 
     $('#width-start').on('mouseenter', function() {
         $('#width-control').addClass('edit');
