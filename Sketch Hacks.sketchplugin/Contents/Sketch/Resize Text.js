@@ -66,7 +66,8 @@ var onRun = function (context) {
                     textLayer.setLineHeight(lineHeight);
                 }
             }
-
+            
+            context.document.reloadInspector();
         } else {
             doc.showMessage("Please select a text layer.");
         }

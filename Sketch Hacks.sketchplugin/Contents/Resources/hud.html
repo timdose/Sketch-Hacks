@@ -1,148 +1,247 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Sketch App Heads Up</title>
-	<!-- <link rel="stylesheet" href="style.css?version=22"> -->
-	<script src="jquery-3.2.1.min.js"></script>
-	<style>
+    <meta charset="utf-8">
+    <title>Sketch App Heads Up</title>
+    <!-- <link rel="stylesheet" href="style.css?version=22"> -->
+    <script src="jquery-3.2.1.min.js"></script>
+    <style>
 
-		body {
-		    margin: 0;
-		    font: 11px/14px "SF UI Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-		    color: #252525;
-		    background: #fff;
-		    height: 250px;
-		}
+        body {
+            margin: 0;
+            font: 11px/14px "SF UI Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            color: #252525;
+            background: #fff;
+            height: 250px;
+        }
 
-		.clearfix:after {
-		    content: "";
-		    display: block;
-		    height: 0;
-		    clear: both;
-		}
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            clear: both;
+        }
 
-		* {
-			box-sizing: border-box;
-		}
+        * {
+            box-sizing: border-box;
+        }
 
-		.container {
-			width: 100%;
-			display: flex;
-			height: 100%;
-			align-items: stretch;
-		}
+        .container {
+            width: 100%;
+            display: flex;
+            height: 100%;
+            align-items: stretch;
+        }
 
-		.column {
-			width: 50%;
-			padding: 5px;
-		}
+        .column {
+            width: 50%;
+            padding: 5px;
+            display: flex;
+        }
 
-		.swatch {
-			width: 20px;
-			height: 20px;
-			border: 1px solid rgba(0,0,0,0.15);
-			border-radius: 3px;
-			background: red;
-			float: left;
-			margin-right: 4px;
-			margin-bottom: 4px;
-		}
-		
-		.group {
-			margin-bottom: 10px;
-		}
+        .swatch {
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 3px;
+            background: red;
+            float: left;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+        
+        .group {
+            margin-bottom: 10px;
+        }
 
-		.color-group {
-			width: 192px;
-		}
+        .color-group {
+            width: 192px;
+        }
 
-		.label {
-			font-weight: 700;
-			border-bottom: 1px solid #ddd;
-			margin-bottom: 5px;
-		}
+        .label {
+            font-weight: 700;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+        
+        .action-control .action-save,
+        .action-control .action-cancel,
+        .action-control .action-input {
+            display: none;
+        }
 
-		#debug {
-			padding: 0 5px;
-			font-size: 10px;
-			color: #aaa;
-		}
-	</style>
+        .action-control.edit .action-cancel,
+        .action-control.edit .action-input {
+            display: flex;
+        }
+
+        .action-control.edit.has-value .action-start {
+            display: none;
+        }
+
+        .action-control.edit.has-value .action-save {
+            display: flex;
+        }
+
+
+        .action-target {
+            background: rgba(0,0,0,0.1);
+            display: flex;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .action-target:hover {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid #aaa;
+        }
+
+        .action-target:active {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid #888;
+        }
+        
+        #width-control {
+            margin-right: 50px;
+            display: flex;
+            height: 50px;
+        }
+
+        #width-input {
+            width: 100px;
+        }
+
+        #column1 {
+            justify-content: flex-end;
+        }
+
+        .chubby-input {
+            font-size: 18px;
+        }
+
+        #debug {
+            padding: 0 5px;
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-	<div id="column1" class="column">
-		<p>stuff</p>
-	</div>
-	<div id="column2" class="column">
-		<div id="global-fill-colors" class="clearfix group color-group">
-			<div class="label">Fill</div>
-			<div id="global-fill-swatch-0"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff9933"></div>
-			<div id="global-fill-swatch-1"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffffff"></div>
-			<div id="global-fill-swatch-2"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff0000"></div>
-			<div id="global-fill-swatch-3"  class="global-fill-swatch swatch" data-type="fill" data-color="#00ff00"></div>
-			<div id="global-fill-swatch-4"  class="global-fill-swatch swatch" data-type="fill" data-color="#0000ff"></div>
-			<div id="global-fill-swatch-5"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffff00"></div>
-			<div id="global-fill-swatch-6"  class="global-fill-swatch swatch" data-type="fill" data-color="#00ffff"></div>
-			<div id="global-fill-swatch-7"  class="global-fill-swatch swatch" data-type="fill" data-color="#000000"></div>
-			<div id="global-fill-swatch-8"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff9933"></div>
-			<div id="global-fill-swatch-9"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffffff"></div>
-			<div id="global-fill-swatch-10" class="global-fill-swatch swatch" data-type="fill" data-color="#ff0000"></div>
-			<div id="global-fill-swatch-11" class="global-fill-swatch swatch" data-type="fill" data-color="#00ff00"></div>
-			<div id="global-fill-swatch-12" class="global-fill-swatch swatch" data-type="fill" data-color="#0000ff"></div>
-			<div id="global-fill-swatch-13" class="global-fill-swatch swatch" data-type="fill" data-color="#ffff00"></div>
-			<div id="global-fill-swatch-14" class="global-fill-swatch swatch" data-type="fill" data-color="#00ffff"></div>
-			<div id="global-fill-swatch-15" class="global-fill-swatch swatch" data-type="fill" data-color="#000000"></div>
-		</div>
-		<div id="global-border-colors" class="clearfix group color-group">
-			<div class="label">Border</div>
-			<div id="global-border-swatch-0"  class="global-border-swatch swatch" data-type="border" data-color="#ff9933"></div>
-			<div id="global-border-swatch-1"  class="global-border-swatch swatch" data-type="border" data-color="#ffffff"></div>
-			<div id="global-border-swatch-2"  class="global-border-swatch swatch" data-type="border" data-color="#ff0000"></div>
-			<div id="global-border-swatch-3"  class="global-border-swatch swatch" data-type="border" data-color="#00ff00"></div>
-			<div id="global-border-swatch-4"  class="global-border-swatch swatch" data-type="border" data-color="#0000ff"></div>
-			<div id="global-border-swatch-5"  class="global-border-swatch swatch" data-type="border" data-color="#ffff00"></div>
-			<div id="global-border-swatch-6"  class="global-border-swatch swatch" data-type="border" data-color="#00ffff"></div>
-			<div id="global-border-swatch-7"  class="global-border-swatch swatch" data-type="border" data-color="#000000"></div>
-			<div id="global-border-swatch-8"  class="global-border-swatch swatch" data-type="border" data-color="#ff9933"></div>
-			<div id="global-border-swatch-9"  class="global-border-swatch swatch" data-type="border" data-color="#ffffff"></div>
-			<div id="global-border-swatch-10" class="global-border-swatch swatch" data-type="border" data-color="#ff0000"></div>
-			<div id="global-border-swatch-11" class="global-border-swatch swatch" data-type="border" data-color="#00ff00"></div>
-			<div id="global-border-swatch-12" class="global-border-swatch swatch" data-type="border" data-color="#0000ff"></div>
-			<div id="global-border-swatch-13" class="global-border-swatch swatch" data-type="border" data-color="#ffff00"></div>
-			<div id="global-border-swatch-14" class="global-border-swatch swatch" data-type="border" data-color="#00ffff"></div>
-			<div id="global-border-swatch-15" class="global-border-swatch swatch" data-type="border" data-color="#000000"></div>
-		</div>
-	</div>
+    <div id="column1" class="column">
+        <div id="width-control" class="action-control">
+            <div id="width-cancel" class="width-cancel action-cancel action-target"><p>X</p></div>
+            <input type="number" id="width-input" class="action-input chubby-input" />
+            <div id="width-start" class="action-start action-target"><p>width</p></div>
+            <div id="width-save" class="action-save action-target"><p>save</p></div>
+        </div>
+    </div>
+    <div id="column2" class="column">
+        <div id="global-fill-colors" class="clearfix group color-group">
+            <div class="label">Fill</div>
+            <div id="global-fill-swatch-0"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff9933"></div>
+            <div id="global-fill-swatch-1"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffffff"></div>
+            <div id="global-fill-swatch-2"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff0000"></div>
+            <div id="global-fill-swatch-3"  class="global-fill-swatch swatch" data-type="fill" data-color="#00ff00"></div>
+            <div id="global-fill-swatch-4"  class="global-fill-swatch swatch" data-type="fill" data-color="#0000ff"></div>
+            <div id="global-fill-swatch-5"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffff00"></div>
+            <div id="global-fill-swatch-6"  class="global-fill-swatch swatch" data-type="fill" data-color="#00ffff"></div>
+            <div id="global-fill-swatch-7"  class="global-fill-swatch swatch" data-type="fill" data-color="#000000"></div>
+            <div id="global-fill-swatch-8"  class="global-fill-swatch swatch" data-type="fill" data-color="#ff9933"></div>
+            <div id="global-fill-swatch-9"  class="global-fill-swatch swatch" data-type="fill" data-color="#ffffff"></div>
+            <div id="global-fill-swatch-10" class="global-fill-swatch swatch" data-type="fill" data-color="#ff0000"></div>
+            <div id="global-fill-swatch-11" class="global-fill-swatch swatch" data-type="fill" data-color="#00ff00"></div>
+            <div id="global-fill-swatch-12" class="global-fill-swatch swatch" data-type="fill" data-color="#0000ff"></div>
+            <div id="global-fill-swatch-13" class="global-fill-swatch swatch" data-type="fill" data-color="#ffff00"></div>
+            <div id="global-fill-swatch-14" class="global-fill-swatch swatch" data-type="fill" data-color="#00ffff"></div>
+            <div id="global-fill-swatch-15" class="global-fill-swatch swatch" data-type="fill" data-color="#000000"></div>
+        </div>
+        <div id="global-border-colors" class="clearfix group color-group">
+            <div class="label">Border</div>
+            <div id="global-border-swatch-0"  class="global-border-swatch swatch" data-type="border" data-color="#ff9933"></div>
+            <div id="global-border-swatch-1"  class="global-border-swatch swatch" data-type="border" data-color="#ffffff"></div>
+            <div id="global-border-swatch-2"  class="global-border-swatch swatch" data-type="border" data-color="#ff0000"></div>
+            <div id="global-border-swatch-3"  class="global-border-swatch swatch" data-type="border" data-color="#00ff00"></div>
+            <div id="global-border-swatch-4"  class="global-border-swatch swatch" data-type="border" data-color="#0000ff"></div>
+            <div id="global-border-swatch-5"  class="global-border-swatch swatch" data-type="border" data-color="#ffff00"></div>
+            <div id="global-border-swatch-6"  class="global-border-swatch swatch" data-type="border" data-color="#00ffff"></div>
+            <div id="global-border-swatch-7"  class="global-border-swatch swatch" data-type="border" data-color="#000000"></div>
+            <div id="global-border-swatch-8"  class="global-border-swatch swatch" data-type="border" data-color="#ff9933"></div>
+            <div id="global-border-swatch-9"  class="global-border-swatch swatch" data-type="border" data-color="#ffffff"></div>
+            <div id="global-border-swatch-10" class="global-border-swatch swatch" data-type="border" data-color="#ff0000"></div>
+            <div id="global-border-swatch-11" class="global-border-swatch swatch" data-type="border" data-color="#00ff00"></div>
+            <div id="global-border-swatch-12" class="global-border-swatch swatch" data-type="border" data-color="#0000ff"></div>
+            <div id="global-border-swatch-13" class="global-border-swatch swatch" data-type="border" data-color="#ffff00"></div>
+            <div id="global-border-swatch-14" class="global-border-swatch swatch" data-type="border" data-color="#00ffff"></div>
+            <div id="global-border-swatch-15" class="global-border-swatch swatch" data-type="border" data-color="#000000"></div>
+        </div>
+    </div>
 
-	
+    
 </div> <!-- .container -->
 <div id="debug">debug</div>
 
 
 <script>
-	var square1 = document.getElementById('square1');
+    var square1 = document.getElementById('square1');
 
-	$('.swatch').each(function(){
-		var color = $(this).data('color');
-		$(this).css('background',color);
-	});
+    $('.swatch').each(function(){
+        var color = $(this).data('color');
+        $(this).css('background',color);
+    });
 
-	$('.swatch').click(function(){
-		var color = $(this).data('color');
-		var type = $(this).data('type')
-		$('#debug').text('set ' + type + ' to ' + color);
-		sendCommand('setColor', [type,color])
-	});
+    $('.swatch').click(function(){
+        var color = $(this).data('color');
+        var type = $(this).data('type')
+        $('#debug').text('set ' + type + ' to ' + color);
+        sendCommand('setColor', [type,color])
+    });
 
-	function externalCall(message) {
-		$('#debug').text(message);
-	}
+    function externalCall(message) {
+        $('#debug').text(message);
+    }
 
-	function sendCommand(command, args) {
-		window.location.hash = command + ':' + args.join(';');
-	} 
+    function sendCommand(command, args) {
+        window.location.hash = command + ':' + args.join(';');
+    } 
+
+    $('.width-cancel').on('click, mouseenter', function() {
+        $('#width-control').removeClass('edit');
+    });
+
+
+    $('#width-input').on('keyup', function() {
+        if ( $('#width-input').val().length > 0 ) {
+            $('#width-control').addClass('has-value');
+            $('#width-input').data({state:'valid'})
+        } else {
+            $('#width-control').removeClass('has-value');
+            $('#width-input').data({state:'cleared'})
+        }
+    });
+
+    $('#width-save').on('click', function() {
+        if ( $('#width-input').data('state') !== 'valid'  ) {
+            console.log('input not valid')
+            return; 
+        }
+
+        var val = $('#width-input').val().toString();
+        console.log(val);
+        sendCommand('setWidth', [val])
+        $('#width-control').removeClass('edit');
+    });
+
+    $('#width-start').on('mouseenter', function() {
+        $('#width-control').addClass('edit');
+        $('#width-input').focus();
+    });
 </script>
 
 
