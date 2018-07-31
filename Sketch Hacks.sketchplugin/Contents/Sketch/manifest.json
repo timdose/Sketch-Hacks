@@ -34,7 +34,7 @@
     {
       "name": "Heads up",
       "identifier": "com.timdose.sketch.util.headsup",
-      "shortcut": "option control command u",
+      "shortcut": "option control command x",
       "script": "Heads Up.js"
     },
     {
