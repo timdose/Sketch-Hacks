@@ -86,10 +86,10 @@ var onRun = function(context) {
     closeButton.setAction("callAction:");
 
     function closeHud() {
-        doc.showMessage('closing!');
-        COScript.currentCOScript().setShouldKeepAround(false);
+        doc.showMessage('closing! ' + hud);
         threadDictionary.removeObjectForKey(identifier);
         hud.close();
+        COScript.currentCOScript().setShouldKeepAround(false);
     }
 
     function runReceivedCommand(locationHash) {
@@ -135,6 +135,7 @@ var onRun = function(context) {
                 setFillColor(selection.objectAtIndex(i), color);
             }
         }
+        closeHud();
     }
     // doc.showMessage('heads up end');
 
@@ -174,7 +175,7 @@ var onRun = function(context) {
         for (var i = 0; i < selection.count(); i++ ) {
             var layer = selection.objectAtIndex(i);
             log('changing width of ' + layer);
-            layer.frame().setWidth(width);
+            layer.frame().setWidth(parseInt(width)));
         }
         closeHud();
     }
