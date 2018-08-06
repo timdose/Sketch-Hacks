@@ -103,6 +103,10 @@ var onRun = function(context) {
             setWidth(command.args[0])
         }
 
+        if ( command.name == 'setHeight' ) {
+            setHeight(command.args[0])
+        }
+
     }
 
     function parseCommand(hashString) {
@@ -176,6 +180,17 @@ var onRun = function(context) {
             var layer = selection.objectAtIndex(i);
             log('changing width of ' + layer);
             layer.frame().setWidth(parseInt(width)));
+        }
+        closeHud();
+    }
+
+    function setHeight(height) {
+        doc.showMessage('set height to ' + height);
+        var selection = getSelectedLayers(context);
+        for (var i = 0; i < selection.count(); i++ ) {
+            var layer = selection.objectAtIndex(i);
+            log('changing height of ' + layer);
+            layer.frame().setHeight(parseInt(height)));
         }
         closeHud();
     }

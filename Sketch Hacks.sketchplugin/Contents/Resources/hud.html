@@ -64,6 +64,12 @@
             margin-bottom: 5px;
         }
         
+        .action-control {
+            display: flex;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
         .action-control .action-save,
         .action-control .action-cancel,
         .action-control .action-input {
@@ -105,16 +111,15 @@
         
         #width-control {
             margin-right: 50px;
-            display: flex;
-            height: 50px;
         }
 
-        #width-input {
+        .action-input {
             width: 100px;
         }
 
         #column1 {
-            justify-content: flex-end;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
         .chubby-input {
@@ -140,6 +145,12 @@
             <input type="number" id="width-input" class="action-input chubby-input" />
             <div id="width-start" class="action-start action-target"><p>width</p></div>
             <div id="width-save" class="action-save action-target"><p>save</p></div>
+        </div>
+        <div id="height-control" class="action-control">
+            <div id="height-cancel" class="height-cancel action-cancel action-target"><p>X</p></div>
+            <input type="number" id="height-input" class="action-input chubby-input" />
+            <div id="height-start" class="action-start action-target"><p>height</p></div>
+            <div id="height-save" class="action-save action-target"><p>save</p></div>
         </div>
     </div>
     <div id="column2" class="column">
@@ -229,6 +240,19 @@
         }
     });
 
+    $('#height-input').on('keyup', function(e) {
+        if ( $('#height-input').val().length > 0 ) {
+            $('#height-control').addClass('has-value');
+            $('#height-input').data({state:'valid'})
+        } else {
+            $('#height-control').removeClass('has-value');
+            $('#height-input').data({state:'cleared'})
+        }
+        if (e.keyCode == 13) {
+            saveHeight();
+        }
+    });
+
     function saveWidth() {
         if ( $('#width-input').data('state') !== 'valid'  ) {
             console.log('input not valid')
@@ -241,11 +265,29 @@
         $('#width-control').removeClass('edit');
     }
 
+    function saveHeight() {
+        if ( $('#height-input').data('state') !== 'valid'  ) {
+            console.log('input not valid')
+            return; 
+        }
+
+        var val = $('#height-input').val().toString();
+        console.log(val);
+        sendCommand('setHeight', [val])
+        $('#height-control').removeClass('edit');
+    }
+
     $('#width-save').on('click', saveWidth);
+    $('#height-save').on('click', saveHeight);
 
     $('#width-start').on('mouseenter', function() {
         $('#width-control').addClass('edit');
         $('#width-input').focus();
+    });
+
+    $('#height-start').on('mouseenter', function() {
+        $('#height-control').addClass('edit');
+        $('#height-input').focus();
     });
 </script>
 

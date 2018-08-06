@@ -139,11 +139,10 @@ var onRun = function (context) {
         var marginBottomHeight = marginBottom.frame().height();
         marginBottomOffset = contentBottom;
         globalBottom = contentBottom + marginBottomHeight;
-
     }
     
     if ( marginTop ) {
-        marginTop.frame().setTop(globalTop)
+        marginTop.frame().setTop(globalTop);
         marginTop.select_byExtendingSelection(true, false);
         // Move to front
         NSApp.sendAction_to_from("moveToFront:", nil, doc);
