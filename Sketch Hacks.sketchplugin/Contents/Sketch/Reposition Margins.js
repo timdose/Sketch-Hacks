@@ -33,11 +33,13 @@ function getNonMarginLayersInGroup(group) {
         var notMargin = true;
         for ( var j = 0; j < ALL_NAMES.length; j++ ) {
             if ( layer.name() == ALL_NAMES[j] ) {
+                console.log(layer.name() + ' is a margin')
                 notMargin = false;
             }
         }
-
+        
         if ( notMargin ) {
+            console.log(layer.name() + ' is not a margin')
             layers.push(layer);
         }
         
@@ -79,6 +81,10 @@ function sortBottom(a, b) {
 	return b.bottom - a.bottom;
 }
 
+function sortTop(a, b) {
+	return b.top - a.top;
+}
+
 var onRun = function (context) {
     var parentGroup = getParentGroup(context);
 
@@ -107,6 +113,7 @@ var onRun = function (context) {
                 // Calculate the bottom edge position
                 var bottom = layer.frame().y() + layer.frame().height();
                 var top = layer.frame().y();
+                console.log(layer.name() + '.top() = ' + top );
                 meta.push({
                     layer: layer,
                     bottom: bottom,
@@ -116,22 +123,27 @@ var onRun = function (context) {
         }
 
         // Sort the layers by bottom position, descending
-        meta.sort(sortBottom);
-
+        
     }
-
-    var contentTop = meta[meta.length-1].top;
+    
+    meta.sort(sortBottom);
     var contentBottom = meta[0].bottom;
     var contentHeight = contentBottom - contentTop;
-    var globalTop = contentTop;
     var globalBottom = contentBottom;
     var globalHeight = contentHeight;
-
+    
+    meta.sort(sortTop);
+    var contentTop = meta[meta.length-1].top;
+    var globalTop = contentTop;
+    
     var marginBottomOffset;
 
     if (marginTop !== undefined ) {
         var marginTopHeight = marginTop.frame().height();
         globalTop = contentTop - marginTopHeight;
+        console.log('contentTop: ' + contentTop );
+        console.log('marginTopHeight: ' + marginTopHeight );
+        console.log('globalTop: ' + globalTop );
         globalHeight += marginTopHeight;
     }
     
