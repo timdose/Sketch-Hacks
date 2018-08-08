@@ -9,7 +9,7 @@
 
     {
       "name": "Resize Text",
-      "identifier": "com.timdose.sketch.resize.text",
+      "identifier": "com.timdose.sketch.text.resize",
       "shortcut": "option command control t",
       "script": "Resize Text.js"
     },
@@ -71,9 +71,7 @@
         }
       },
       "identifier": "com.timdose.sketch.annotation"
-    }
-    
-    ,
+    },
     {
       "script": "Insta-Detach.js",
       "name": "Insta-Detach",
@@ -85,6 +83,18 @@
         }
       },
       "identifier": "com.timdose.sketch.instadetach"
+    },
+    {
+      "name": "Line Height Up",
+      "identifier": "com.timdose.sketch.text.lineheightUp",
+      "shortcut": "option control command =",
+      "script": "Line Height Up.js"
+    },
+    {
+      "name": "Line Height Down",
+      "identifier": "com.timdose.sketch.text.lineheightDown",
+      "shortcut": "option control command -",
+      "script": "Line Height Down.js"
     }
     
     
@@ -92,7 +102,7 @@
   ],
   "menu": {
     "items": [
-      "com.timdose.sketch.resize.text",
+      "com.timdose.sketch.text.resize",
       "com.timdose.sketch.resize.artboard",
       "com.timdose.sketch.move.right",
       "com.timdose.sketch.link.underline",
@@ -100,7 +110,9 @@
       "com.timdose.sketch.util.smartfitartboardheight",
       "com.timdose.sketch.util.repositionmargins",
       "com.timdose.sketch.select.selectcurrentandbelow",
-      "com.timdose.sketch.util.headsup"
+      "com.timdose.sketch.util.headsup",
+      "com.timdose.sketch.text.lineheightUp",
+      "com.timdose.sketch.text.lineheightDown"
 
     ]
   }

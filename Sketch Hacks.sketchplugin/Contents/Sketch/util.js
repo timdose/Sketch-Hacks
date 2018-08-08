@@ -13,7 +13,7 @@ var getBaseline = function (fontSize, lineHeight) {
 com.timdose.sketch = {
 	sendAction: function (commandToPerform) {
 	    try {
-	        [NSApp sendAction:commandToPerform to:nil from:com.timdose.doc];
+	        // [NSApp sendAction:commandToPerform to:nil from:com.timdose.doc];
 	    } catch(e) {
 	        log(e)
 	    }
@@ -53,6 +53,48 @@ com.timdose.selection = {
 	}
 }
 
+com.timdose.text = {
+	incrementLineHeight: function(context, increment) {
+		var doc = context.document;
+		var selection = context.selection;
+
+		var textLayers = [];
+	
+		if (selection.count() > 0) {
+	
+	
+			// Loop through selected layers
+			for (var i = 0; i < selection.count(); i++) {
+	
+				var s = selection[i];
+	
+				// Check if the layer is a text layer
+				if (s.className() == "MSTextLayer"){
+					textLayers.push(s);
+				}
+			}
+	
+			if (textLayers.length > 0) {
+				for (var j = 0; j < textLayers.length; j++) {
+					
+					var textLayer = textLayers[j];
+					var lineHeight = textLayer.lineHeight();
+					if ( lineHeight > 1 ) {
+						textLayer.setLineHeight(lineHeight+increment);
+					}
+				}
+				
+				context.document.reloadInspector();
+			} else {
+				doc.showMessage("Please select a text layer.");
+			}
+		} else {
+			doc.showMessage("Please select a text layer.")
+		}
+	}
+}
+
 var exports = typeof exports === 'undefined'? this['mymodule']={} : exports;
 
 exports.getBaseline = getBaseline;
+exports.incrementLineHeight = com.timdose.text.incrementLineHeight;

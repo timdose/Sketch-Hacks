@@ -30,7 +30,7 @@ var onRun = function(context) {
     var windowHeight = 300;
 
     var mouseLocation = NSEvent.mouseLocation();
-    var windowX = mouseLocation.x-windowWidth/2;
+    var windowX = mouseLocation.x-windowWidth/2+30;
     var windowY = mouseLocation.y-windowHeight+56;
 
     hud = NSPanel.alloc().init();
